@@ -1,8 +1,6 @@
 import pyttsx3
 import time
 
-# keeping it simple, no threads, just direct speech
-# windows pyttsx3 works best this way
 engine = pyttsx3.init()
 engine.setProperty('rate', 145)
 engine.setProperty('volume', 1.0)

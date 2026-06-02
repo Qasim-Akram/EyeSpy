@@ -4,7 +4,6 @@ import cv2
 
 class ObjectDetector:
     def __init__(self, model_path="yolov8n.pt", confidence=0.45):
-        
         print("Loading model, please wait...")
         self.model = YOLO(model_path)
         self.confidence = confidence
@@ -21,13 +20,11 @@ class ObjectDetector:
                 continue
 
             for box in boxes:
-                
                 x1, y1, x2, y2 = map(int, box.xyxy[0].tolist())
 
                 conf = float(box.conf[0])
                 class_id = int(box.cls[0])
 
-            
                 label = self.model.names[class_id]
 
                 detections.append({
@@ -40,16 +37,13 @@ class ObjectDetector:
         return detections
 
     def draw_boxes(self, frame, detections):
-        
         for det in detections:
             x1, y1, x2, y2 = det['box']
             label = det['label']
             conf = det['confidence']
 
-            
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
-            
             text = f"{label} {conf:.2f}"
             cv2.putText(
                 frame, text,

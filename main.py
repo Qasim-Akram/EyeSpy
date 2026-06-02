@@ -28,7 +28,6 @@ def speak(text):
     ps_process.stdin.flush()
 
 def main():
-    # check if user passed a video file as argument
     if len(sys.argv) > 1:
         source = sys.argv[1]
         print(f"Using video file: {source}")
@@ -56,7 +55,6 @@ def main():
         ret, frame = cap.read()
 
         if not ret:
-            # if video file ended, just stop
             if source != 0:
                 print("Video finished.")
             else:
