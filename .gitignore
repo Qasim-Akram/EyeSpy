@@ -1,0 +1,41 @@
+# python cache stuff
+__pycache__/
+*.py[cod]
+*.pyo
+
+# virtual environment
+venv/
+env/
+.env
+
+# yolo model weights (too big for github)
+*.pt
+*.pth
+*.onnx
+
+# yolo output folders
+runs/
+weights/
+
+# ultralytics settings
+*.json
+
+# opencv stuff
+*.avi
+*.mp4
+*.jpg
+*.jpeg
+*.png
+
+# windows stuff
+Thumbs.db
+desktop.ini
+
+# vs code
+.vscode/
+
+# jupyter notebooks if any
+.ipynb_checkpoints/
+
+# logs
+*.log
