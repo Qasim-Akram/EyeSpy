@@ -6,7 +6,15 @@ from detector import ObjectDetector
 from utils import build_announcement, get_priority
 
 last_spoken = 0
-cooldown = 5.0
+cooldown = 3.0
+
+ps_process = subprocess.Popen(
+    ["powershell", "-NoExit", "-Command", "-"],
+    stdin=subprocess.PIPE,
+    stdout=subprocess.DEVNULL,
+    stderr=subprocess.DEVNULL,
+    text=True
+)
 
 def speak(text):
     global last_spoken
@@ -15,16 +23,23 @@ def speak(text):
         return
     last_spoken = now
     print(f"Speaking: {text}")
-    # use windows built in speech instead of pyttsx3
-    # this never gets stuck because each call is a fresh process
-    cmd = f'Add-Type -AssemblyName System.Speech; $s = New-Object System.Speech.Synthesis.SpeechSynthesizer; $s.Rate = 1; $s.Speak("{text}")'
-    subprocess.Popen(["powershell", "-Command", cmd])
+    cmd = f'Add-Type -AssemblyName System.Speech; $s = New-Object System.Speech.Synthesis.SpeechSynthesizer; $s.Rate = 3; $s.Speak("{text}")\n'
+    ps_process.stdin.write(cmd)
+    ps_process.stdin.flush()
 
 def main():
-    cap = cv2.VideoCapture(0)
+    # check if user passed a video file as argument
+    if len(sys.argv) > 1:
+        source = sys.argv[1]
+        print(f"Using video file: {source}")
+    else:
+        source = 0
+        print("Using webcam")
+
+    cap = cv2.VideoCapture(source)
 
     if not cap.isOpened():
-        print("Cant open camera.")
+        print(f"Cant open: {source}")
         sys.exit(1)
 
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
@@ -39,13 +54,18 @@ def main():
 
     while True:
         ret, frame = cap.read()
+
         if not ret:
-            print("Cant read frame")
+            # if video file ended, just stop
+            if source != 0:
+                print("Video finished.")
+            else:
+                print("Cant read frame")
             break
 
         frame_count += 1
 
-        if frame_count % 20 != 0:
+        if frame_count % 10 != 0:
             cv2.imshow("EyeSpy - Press Q to quit", frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
@@ -72,6 +92,8 @@ def main():
 
     cap.release()
     cv2.destroyAllWindows()
+    ps_process.stdin.close()
+    ps_process.terminate()
 
 if __name__ == "__main__":
     main()
