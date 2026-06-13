@@ -1,7 +1,9 @@
 # 👁️ EyeSpy — Blind Assistance System
 
-A real-time object detection system that helps visually impaired individuals navigate their surroundings using audio feedback.
+**Muhammad Qasim Akram (2152)  &  Asad Farooq (2138)**
+BS Computer Science — 6th Semester | Islamia University of Bahawalpur | CS-1013 Computer Vision
 
+A real-time object detection system that helps visually impaired individuals navigate their surroundings using audio feedback.
 Built with **Python**, **YOLOv8**, and **OpenCV**.
 
 ---
@@ -79,6 +81,7 @@ The model is pre-trained — no custom training was done. It is downloaded autom
 ## ⚙️ Setup
 
 ### Requirements
+
 - Windows 10 or 11
 - Python 3.10 or above
 - Webcam or a video file
