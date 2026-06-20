@@ -39,7 +39,6 @@ def build_announcement(detections, frame_width, frame_height):
 
     frame_area = frame_width * frame_height
     messages = []
-
     sorted_dets = sorted(detections, key=lambda d: get_box_area(d['box']), reverse=True)
     top = sorted_dets[:3]
 
